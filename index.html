@@ -3,24 +3,35 @@
 <head>
     <meta charset="utf-8">
     <title>SPADeputados</title>
-    
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="js/core.js"></script>
 </head>
 
 <body>
-    <div>
-        <h1>
-                SPADeputados
-        </h1>
+    <div id="corpo">
+            <div class="topnav">
+                    <a class="active" href="#home">Inicio</a>
+                    <a href="#about">Sobre</a>
+                    <a href="#contact">Contato</a>
+                    <div class="search-container">
+                      <form action="/action_page.php">
+                        <input type="text" placeholder="Pesquisar..." name="search">
+                        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                      </form>
+                    </div>
+                  </div>
         <div>
             <div id="listaDepts"></div>
         </div>
-</div>
+    </div>
+    <div id="footer"></div>
 </body>
 
 </html>
