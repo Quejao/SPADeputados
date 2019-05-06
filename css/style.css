@@ -1,0 +1,17 @@
+body{
+    margin:0;
+    padding:0;
+    border-bottom: #1c8fbb 12px solid ;
+    display: grid;
+    grid-template-rows: 85% auto;
+}
+
+.header-title{
+    display: flex;
+    justify-content: space-between;
+}
+
+h1{
+    margin:0;
+    padding:0;
+}
