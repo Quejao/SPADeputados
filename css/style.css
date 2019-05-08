@@ -99,7 +99,7 @@ div.infos{
   }
   
   .topnav .search-container {
-    float: left;
+    float: right;
   }
   
   .topnav input[type=text] {
