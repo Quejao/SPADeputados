@@ -22,7 +22,7 @@
     <div class="topnav">
       <a class="active" onclick="drawChart();">SPADeputados</a>
       <div class="search-container">
-        <form onsubmit="pesquisa(search.value);return false">
+        <form onsubmit="pesquisa(search.value.toUpperCase());return false">
           <input id="search" type="text" placeholder="Pesquisar..." name="search">
           <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
         </form>
