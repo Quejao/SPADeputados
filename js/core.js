@@ -1,18 +1,43 @@
-var resposta = [];
+var idDepts = [];
+var nomeDepts = [];
 
-var listGastos = [['Tipo de Despesa','Dinheiro gasto']];
+var listGastos = [];
+var tipoGastos = [];
+
+function createCORSRequest(method, url) {
+    var xhr = new XMLHttpRequest();
+    if ("withCredentials" in xhr) {
+
+        // Check if the XMLHttpRequest object has a "withCredentials" property.
+        // "withCredentials" only exists on XMLHTTPRequest2 objects.
+        xhr.open(method, url, true);
+
+    } else if (typeof XDomainRequest != "undefined") {
+
+        // Otherwise, check if XDomainRequest.
+        // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+        xhr = new XDomainRequest();
+        xhr.open(method, url);
+
+    } else {
+
+        // Otherwise, CORS is not supported by the browser.
+        xhr = null;
+
+    }
+    return xhr;
+}
 
 function infosDepts(){
-
-    const Http = new XMLHttpRequest();
+    
     const url='https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome';
+    const Http = createCORSRequest("GET",url);
     var listDep;
-    Http.open("GET", url);
     Http.send();
     Http.onreadystatechange=(e)=>{
         listDep = JSON.parse(Http.responseText);
         var txt = "";
-        for(var i = 0; i < 102; i++){
+        for(var i = 0; i < 513; i++){
             txt += `<div id="dep_${listDep.dados[i].id}" class="depts">   <div class="infos">Nome: `;
             txt += listDep.dados[i].nome;
             
@@ -27,7 +52,8 @@ function infosDepts(){
 
             txt += '</div>';
 
-            resposta.push(listDep.dados[i].id)
+            idDepts.push(listDep.dados[i].id);
+            nomeDepts.push(listDep.dados[i].nome);
         }
         
         document.getElementById('listaDepts').style.height = "auto";
@@ -35,25 +61,36 @@ function infosDepts(){
         //document.getElementById('listaDepts').innerHTML = txt;
         
         console.log("Dept1: ",listDep.dados[1])
+        getGastos();
     }
     
 }
 
 infosDepts();
 
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
+function trataDespesas(){
+    var listGastosProcessada = [['Tipo de Despesa','Dinheiro gasto']];
+    var aux = 0, count = 0;
+    for(var i = 0; i < tipoGastos.length; i++){
+        aux = 0;
+        count = 0;
+        for(var j = 0; j < listGastos.length; j++){
+            if(listGastos[j][0] == tipoGastos[i]){
+                aux += listGastos[j][1];
+                count++;
+            }
+        }
+        listGastosProcessada.push([tipoGastos[i],aux/count]);
+    }
+    return listGastosProcessada;
+}
 
 function drawChart() {
-    var array = [
-        ['Task', 'Hours per Day'],
-        ['Work',     10],
-        ['Eat',      2],
-        ['Commute',  2],
-        ['Watch TV', 2],
-        ['Sleep',    8]
-    ];
-    //var UrlGastos = `https://dadosabertos.camara.leg.br/api/v2/deputados/${id}/despesas?ordem=ASC&ordenarPor=ano`;
+    
+    var array = trataDespesas();
+
+    console.log(array)
+
     var data = google.visualization.arrayToDataTable(array);
 
     document.getElementById('listaDepts').style.height = '600px';
@@ -68,20 +105,22 @@ function drawChart() {
     chart.draw(data, options);
 }
 
-console.log("respostas: ",resposta);
-
 function getGastos(){
-    for(var i = 0; i < resposta.length; i++){
-        const Http2 = new XMLHttpRequest();
-        const UrlGastos = `https://dadosabertos.camara.leg.br/api/v2/deputados/${resposta[i]}/despesas?ordem=ASC&ordenarPor=ano`;
+    for(var i = 0; i < 101; i++){
+        const UrlGastos = `https://dadosabertos.camara.leg.br/api/v2/deputados/${idDepts[i]}/despesas?ordem=ASC&ordenarPor=ano`;
+        const Http2 = createCORSRequest("GET",UrlGastos);
         var temp = "";
-        Http2.open("GET", UrlGastos);
         Http2.send();
         Http2.onreadystatechange=(e)=>{
             temp = JSON.parse(Http2.responseText);
-            console.log(temp);
+            for(var i = 0; i < temp.dados.length; i++){
+                listGastos.push([temp.dados[i].tipoDespesa,temp.dados[i].valorLiquido]);
+                if(!tipoGastos.includes(temp.dados[i].tipoDespesa)){
+                    tipoGastos.push(temp.dados[i].tipoDespesa);
+                }
+            }
         }
     }
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
 }
-
-getGastos();

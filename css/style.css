@@ -56,8 +56,21 @@ div.infos{
 
 #footer{
     height: 100px;
-    background-color:  #1c8ebbad;
+    background-color:  #b8e3f5ad;
     border-top: #1c8fbb 10px solid ;
+    text-decoration-style: solid;
+}
+
+.contato {
+  margin-left: 20px;
+}
+
+.contato a {
+  font-size: 16px;
+}
+
+.contato b {
+  width: 100%;
 }
 
 .topnav {
