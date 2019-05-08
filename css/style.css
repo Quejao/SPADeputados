@@ -25,12 +25,12 @@ h1{
 }
 
 div.depts{
-    background-color: rgba(28, 101, 236, 0.527);
+    background-color: rgba(161, 178, 212, 0.37);
     border-style: solid;
     border-color:  #fdfdfd;
     border-width: 2px;
-    width: 33%;
-    float: right;   
+    width:50%;
+    float: left;  
 }
 
 div.infos{
@@ -44,7 +44,7 @@ div.infos{
     padding-bottom: 5%; 
     width: auto;
     height: auto;
-    
+    padding-top: 0; 
     float: right; 
 }
 
@@ -99,7 +99,7 @@ div.infos{
   }
   
   .topnav .search-container {
-    float: right;
+    float: left;
   }
   
   .topnav input[type=text] {
