@@ -73,6 +73,10 @@ div.infos{
   width: 100%;
 }
 
+.erro {
+  font-size: 30px;
+}
+
 .topnav {
     overflow: hidden;
     background-color: #e9e9e9;

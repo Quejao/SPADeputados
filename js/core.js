@@ -148,6 +148,8 @@ function pesquisa(value){
             txt += "</div>";
             document.getElementById("listaDepts").innerHTML = txt;
         };
+    } else{
+        alert(`Deputado ${value} não encontrado! Verifique o nome e pesquise novamente.`)
     }
 };
 
